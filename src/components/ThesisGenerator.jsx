@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 
 const ThesisGenerator = () => {
   const [topic, setTopic] = useState("");
-  const [result, setResult] = useState({ thesis: "", sources: [] });
-  const [paragraph, setParagraph] = useState("");
+  const [audience, setAudience] = useState("");
+  const [wordCount, setWordCount] = useState("");
+  const [result, setResult] = useState({ title: "", sources: [] });
+  const [article, setArticle] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [aiReady, setAiReady] = useState(false);
@@ -18,37 +20,34 @@ const ThesisGenerator = () => {
     return () => clearInterval(checkReady);
   }, []);
 
-  const generateThesis = async () => {
+  const generateTitleAndSources = async () => {
     if (!topic) return;
     setLoading(true);
-    setResult({ thesis: "", sources: [] });
-    setParagraph("");
+    setResult({ title: "", sources: [] });
+    setArticle("");
     setError("");
 
     try {
       const response = await window.puter.ai.chat(`
 You are DraftMate. 
-1. Generate a one-sentence thesis for this topic: ${topic}.
+1. Generate a compelling article title for this topic: ${topic}.
 2. Provide 10 credible sources in proper MLA format for a "Works Cited" section.
    - Each source must include: Author(s). Title. Publisher, Year. URL (if applicable).
    - Number them 1 to 10.
-3. Output only the thesis and the sources in order, properly formatted for MLA.
+3. Output only the title and the sources in order, properly formatted for MLA.
       `);
 
       const content = response?.message?.content || response?.content || JSON.stringify(response);
       const lines = content.split("\n").filter((line) => line.trim() !== "");
-
       const firstSourceIndex = lines.findIndex((line) => /^\d+\.\s/.test(line));
-      const thesisLines = firstSourceIndex > 0 ? lines.slice(0, firstSourceIndex) : [lines[0]];
-      const thesisLine = thesisLines.join(" ").trim();
-
+      const titleLine = firstSourceIndex > 0 ? lines.slice(0, firstSourceIndex).join(" ").trim() : lines[0];
       const sourceLines = firstSourceIndex >= 0 ? lines.slice(firstSourceIndex) : [];
       const sources = sourceLines.map((line) => {
         const match = line.match(/^\d+\.\s*(.*)$/);
         return { text: match ? match[1].trim() : line.trim() };
       });
 
-      setResult({ thesis: thesisLine, sources });
+      setResult({ title: titleLine, sources });
     } catch (err) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -56,35 +55,34 @@ You are DraftMate.
     }
   };
 
-  const generateParagraph = async () => {
-    if (!result.thesis || result.sources.length === 0) return;
+  const generateArticle = async () => {
+    if (!result.title || result.sources.length === 0 || !audience || !wordCount) return;
     setLoading(true);
-    setParagraph("");
+    setArticle("");
     setError("");
 
     try {
       const sourcesText = result.sources.map((s, i) => `${i + 1}. ${s.text}`).join("\n");
-
       const response = await window.puter.ai.chat(`
-You are DraftMate. 
-Write a single cohesive paragraph about the topic using this thesis: "${result.thesis}".
-Use **only 2 sentences with direct quotes** from the MLA sources as evidence:
-- First evidence sentence → quote + MLA in-text citation
-- Reasoning sentence 1 → explain how evidence supports thesis
-- Reasoning sentence 2 → further analysis
-- Second evidence sentence → quote + MLA in-text citation
-- Reasoning sentence 1 → explain evidence
-- Reasoning sentence 2 → further analysis
-- Concluding sentence → summarize paragraph
+You are DraftMate, a world-class SEO content writer.
+ARTICLE TYPE: offsite article/blog post
+TARGET AUDIENCE: ${audience}
+NUMBER OF WORDS: ${wordCount}
 
-Use proper MLA in-text citations matching the provided sources. Include quotes exactly as they appear in the sources. Do not cite anything else. Make it clear which sentences are evidence sentences.  
+Write an article based on this title: "${result.title}"
+Follow this structure:
+1. Hook/introduction related to the title.
+2. Body paragraphs that include 2 direct MLA-cited quotes from the sources below.
+3. Logical transitions, emotional resonance, and human-like rhythm.
+4. Conversational, spontaneous tone as described in the style guide.
+5. Concluding paragraph that ties everything together naturally.
 
-Works Cited:
+Use proper MLA in-text citations (Author Last Name, Title).
+Here are the sources:
 ${sourcesText}
       `);
-
       const content = response?.message?.content || response?.content || JSON.stringify(response);
-      setParagraph(content);
+      setArticle(content);
     } catch (err) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -92,10 +90,31 @@ ${sourcesText}
     }
   };
 
+  const linkify = (text) => {
+    if (!text) return null;
+    const urlSplitRegex = /(https?:\/\/[^\s)]+)/g;
+    return text.split(urlSplitRegex).map((part, i) => {
+      if (!part) return null;
+      const urlMatch = part.match(/^(https?:\/\/[^\s)]+?)([.,)]+)?$/);
+      if (urlMatch) {
+        const url = urlMatch[1];
+        const trailing = urlMatch[2] || "";
+        return (
+          <span key={i}>
+            <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+              {url}
+            </a>
+            {trailing}
+          </span>
+        );
+      }
+      return <span key={i}>{part}</span>;
+    });
+  };
+
   return (
     <div className="max-w-3xl mx-auto my-8 p-6 bg-white rounded-xl shadow-xl">
-      <h2 className="text-2xl font-bold mb-4 text-center">Thesis Generator + MLA Paragraph</h2>
-
+      <h2 className="text-2xl font-bold mb-4 text-center">Article Generator + MLA</h2>
       <div
         className={`px-4 py-2 rounded-full text-sm mb-4 text-center ${
           aiReady
@@ -116,44 +135,72 @@ ${sourcesText}
 
       <div className="flex justify-center gap-4 mb-4">
         <button
-          onClick={generateThesis}
+          onClick={generateTitleAndSources}
           className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:opacity-80 text-white font-semibold rounded-2xl transition disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!aiReady || loading || !topic.trim()}
         >
-          {loading ? "Generating Thesis..." : "Generate Thesis + Sources"}
-        </button>
-
-        <button
-          onClick={generateParagraph}
-          className="px-6 py-3 bg-gradient-to-r from-green-500 to-teal-500 hover:opacity-80 text-white font-semibold rounded-2xl transition disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled={!result.thesis || result.sources.length === 0 || loading}
-        >
-          {loading ? "Generating Paragraph..." : "Generate Paragraph (MLA Quotes)"}
+          {loading ? "Generating Title..." : "Generate Title + Sources"}
         </button>
       </div>
 
-      {result.thesis && (
+      {result.title && (
         <div className="p-4 bg-gray-100 rounded-xl text-gray-800 whitespace-pre-wrap mb-4">
-          <h3 className="font-bold mb-2">Thesis:</h3>
-          <p>{result.thesis}</p>
+          <h3 className="font-bold mb-2">Generated Title:</h3>
+          <p>{result.title}</p>
         </div>
       )}
 
       {result.sources.length > 0 && (
-        <div className="p-4 bg-gray-50 rounded-xl text-gray-800 whitespace-pre-wrap mb-4">
+        <div className="p-4 bg-gray-50 rounded-xl text-gray-800 whitespace-pre-wrap mb-6">
           <h3 className="font-bold mb-2">Works Cited (MLA):</h3>
           {result.sources.map((source, index) => (
             <p key={index} className="mb-1">
-              {index + 1}. {source.text}
+              {index + 1}. {linkify(source.text)}
             </p>
           ))}
         </div>
       )}
 
-      {paragraph && (
+      {result.title && result.sources.length > 0 && (
+        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">
+          <select
+            className="p-3 border border-gray-300 rounded-xl bg-gray-100 focus:ring-2 focus:ring-blue-500"
+            value={audience}
+            onChange={(e) => setAudience(e.target.value)}
+          >
+            <option value="">Select Target Audience</option>
+            <option value="college students">College Students</option>
+            <option value="researchers">Researchers</option>
+            <option value="teachers">Teachers</option>
+            <option value="blog readers">Blog Readers</option>
+            <option value="general audience">General Audience</option>
+          </select>
+
+          <select
+            className="p-3 border border-gray-300 rounded-xl bg-gray-100 focus:ring-2 focus:ring-blue-500"
+            value={wordCount}
+            onChange={(e) => setWordCount(e.target.value)}
+          >
+            <option value="">Select Word Count</option>
+            <option value="500">500 Words</option>
+            <option value="1000">1000 Words</option>
+            <option value="1500">1500 Words</option>
+          </select>
+
+          <button
+            onClick={generateArticle}
+            className="px-6 py-3 bg-gradient-to-r from-green-500 to-teal-500 hover:opacity-80 text-white font-semibold rounded-2xl transition disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={!audience || !wordCount || loading}
+          >
+            {loading ? "Generating Article..." : "Generate Full Article"}
+          </button>
+        </div>
+      )}
+
+      {article && (
         <div className="p-4 bg-gray-50 rounded-xl text-gray-800 whitespace-pre-wrap mb-4">
-          <h3 className="font-bold mb-2">Generated Paragraph (MLA Quotes)</h3>
-          <p>{paragraph}</p>
+          <h3 className="font-bold mb-2">Generated Article</h3>
+          <p>{linkify(article)}</p>
         </div>
       )}
 
