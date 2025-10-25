@@ -14,6 +14,7 @@ function App() {
         </div>
 
         <div className="nav-center">
+          <button className="nav-item">About</button>
           <button className="nav-item">Features</button>
           <button className="nav-item">FAQ</button>
           <button className="nav-item">Updates</button>
