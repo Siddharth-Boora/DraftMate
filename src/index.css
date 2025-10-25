@@ -11,7 +11,7 @@
   top: 0;
   width: 100%;
   height: 80px;
-  background: #ffffff;
+  background: transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,21 +19,16 @@
   z-index: 1000;
 }
 
-/* LOGO */
-.logo {
-  width: 45px;
+.logo img {
+  width: 45px; /* Adjust logo size */
   height: auto;
 }
 
-/* NAV CENTER ITEMS */
 .nav-center {
   display: flex;
   gap: 40px;
-  justify-content: center;
-  flex: 1;
 }
 
-/* NAV ITEM */
 .nav-item {
   background: none;
   border: none;
@@ -41,12 +36,10 @@
   font-weight: 500;
   color: #000;
   cursor: pointer;
-  padding-bottom: 6px;
+  padding-bottom: 0px;
   position: relative;
-  text-align: center;
 }
 
-/* Underline animation from center */
 .nav-item::after {
   content: "";
   position: absolute;
@@ -67,7 +60,6 @@
   width: 100%;
 }
 
-/* LOGIN BUTTON */
 .login-btn {
   background: #4a00ff;
   color: #fff;
@@ -77,19 +69,59 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
+  transition: background 0.2s ease;
 }
 
 .login-btn:hover {
-  background: #3a00cc; /* slightly darker on hover */
+  background: #3a00cc;
 }
 
-.login-btn:active {
-  transform: scale(0.97); /* subtle click animation */
-}
-
-/* BODY */
-body {
+/* HERO SECTION */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 0 20px;
   background: #ffffff;
-  padding-top: 80px;
+  color: #000;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #4a00ff, #ff007a, #00c4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 40px;
+  max-width: 700px;
+}
+
+.hero-cta {
+  background: #4a00ff;
+  color: #fff;
+  font-weight: 600;
+  padding: 15px 35px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.hero-cta:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
 }
