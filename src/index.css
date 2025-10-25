@@ -1,13 +1,95 @@
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 35px;
+  z-index: 1000;
+}
+
+/* LOGO */
+.logo {
+  width: 45px;
+  height: auto;
+}
+
+/* NAV CENTER ITEMS */
+.nav-center {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  flex: 1;
+}
+
+/* NAV ITEM */
+.nav-item {
+  background: none;
+  border: none;
+  font-size: 17px;
+  font-weight: 500;
+  color: #000;
+  cursor: pointer;
+  padding-bottom: 6px;
+  position: relative;
+  text-align: center;
+}
+
+/* Underline animation from center */
+.nav-item::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  height: 2px;
+  width: 0%;
+  background: #4a00ff;
+  transform: translateX(-50%);
+  transition: width 0.2s ease-out;
+}
+
+.nav-item:hover {
+  color: #4a00ff;
+}
+
+.nav-item:hover::after {
+  width: 100%;
+}
+
+/* LOGIN BUTTON */
+.login-btn {
+  background: #4a00ff;
+  color: #fff;
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.login-btn:hover {
+  background: #3a00cc; /* slightly darker on hover */
+}
+
+.login-btn:active {
+  transform: scale(0.97); /* subtle click animation */
+}
+
+/* BODY */
+body {
+  background: #ffffff;
+  padding-top: 80px;
 }
