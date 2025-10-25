@@ -1,43 +1,46 @@
 import React, { useState } from "react";
-import { auth } from "./firebase"; // Make sure your firebase config is in src/firebase.js
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { Link } from "react-router-dom";
 import "./Login.css";
+import { auth } from "./firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import logo from "./logo.png"; // Make sure logo.png is in src folder
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-    setLoading(true);
 
     if (!email || !password) {
       setError("Please enter both email and password.");
-      setLoading(false);
       return;
     }
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Logged in successfully!");
-      // Later → navigate to dashboard/home
+      // You can redirect here if needed
     } catch (err) {
-      console.error(err);
       setError("Invalid email or password.");
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <div className="login-container">
-      <form className="login-box" onSubmit={handleLogin}>
-        <h2 className="login-title">Sign In</h2>
+      {/* Logo at top-left */}
+      <div className="login-logo">
+        <Link to="/">
+          <img src={logo} alt="DraftMate Logo" />
+        </Link>
+      </div>
 
-        {error && <p className="error-msg">{error}</p>}
+      <form className="login-form" onSubmit={handleLogin}>
+        <h2 className="gradient-text">Sign In</h2>
+
+        {error && <p className="error">{error}</p>}
 
         <input
           type="email"
@@ -53,12 +56,10 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button type="submit" className="login-btn" disabled={loading}>
-          {loading ? "Logging In..." : "Log In"}
-        </button>
+        <button type="submit" className="login-btn">Sign In</button>
 
-        <p className="legal">
-          Don't have an account? <a href="/signup">Sign Up</a>
+        <p className="signup-link">
+          Don't have an account? <Link to="/signup">Create Account</Link>
         </p>
       </form>
     </div>

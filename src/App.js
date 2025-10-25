@@ -8,6 +8,11 @@ import Login from "./Login";
 function App() {
   return (
     <Router>
+      {/* Global decorative splotches (rendered outside Routes so they appear on every page) */}
+      <div className="splotch splotch1" aria-hidden="true" />
+      <div className="splotch splotch2" aria-hidden="true" />
+      <div className="splotch splotch3" aria-hidden="true" />
+
       <Routes>
         <Route
           path="/"
@@ -29,7 +34,7 @@ function App() {
                 </div>
 
                 <a href="/login">
-                  <button className="login-btn">Log In</button>
+                  <button className="login-btn">Sign In</button>
                 </a>
               </nav>
 

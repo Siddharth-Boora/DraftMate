@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* center vertically */
   min-height: 100vh;
-  background: #ffffff;
+  background: transparent; /* allow splotches to show behind the page */
   position: relative;
 }
 
@@ -30,7 +31,9 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin-top: 80px; /* space from logo/top */
+  margin-top: 0;
+  position: relative;
+  z-index: 2; /* keep form above decorative splotches */
 }
 
 /* Rest of styles remain same */

@@ -27,7 +27,9 @@ body {
   filter: blur(18px);
   mix-blend-mode: screen;
   opacity: 1;
-  z-index: 0; /* make sure app content (z-index >= 1) is above */
+  /* sit above page backgrounds but below navbar (navbar uses z-index:1000).
+    Use low z-index so we can place the form panels above the splotches. */
+  z-index: 1;
   will-change: transform;
   transform: translateZ(0);
 }
