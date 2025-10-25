@@ -64,7 +64,13 @@ You are DraftMate.
         setSources(sourceLines);
 
       } catch (err) {
-        setError(err.message || "Something went wrong while generating title/sources");
+        // normalize errors for nicer display
+        try {
+          const formatError = (await import("../utils/formatError")).default;
+          setError(formatError(err) || "Something went wrong while generating title/sources");
+        } catch (e) {
+          setError(err.message || "Something went wrong while generating title/sources");
+        }
       } finally {
         setLoading(false);
       }
@@ -100,7 +106,12 @@ ${sourcesText}
       setEssay(content.split(/\n{2,}/).map(p => p.trim()).filter(p => p));
 
     } catch (err) {
-      setError(err.message || "Something went wrong while generating the essay");
+      try {
+        const formatError = (await import("../utils/formatError")).default;
+        setError(formatError(err) || "Something went wrong while generating the essay");
+      } catch (e) {
+        setError(err.message || "Something went wrong while generating the essay");
+      }
     } finally {
       setLoading(false);
     }

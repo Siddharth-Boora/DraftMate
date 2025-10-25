@@ -36,6 +36,31 @@
   z-index: 2; /* keep form above decorative splotches */
 }
 
+/* Entrance animation (shared with signup) */
+.animate-enter {
+  animation: slideDownFade 600ms cubic-bezier(.2,.9,.2,1) both;
+}
+
+.login-form > * {
+  opacity: 0;
+  transform: translateY(-6px);
+  animation: staggerFade 420ms ease forwards;
+}
+.login-form > *:nth-child(1) { animation-delay: 120ms; }
+.login-form > *:nth-child(2) { animation-delay: 160ms; }
+.login-form > *:nth-child(3) { animation-delay: 200ms; }
+.login-form > *:nth-child(4) { animation-delay: 240ms; }
+.login-form > *:nth-child(5) { animation-delay: 280ms; }
+
+@keyframes slideDownFade {
+  0% { opacity: 0; transform: translateY(-8px) scale(0.995); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes staggerFade {
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .gradient-text {
   background: linear-gradient(135deg, #4a00ff, #ff007a, #00c4ff);
   -webkit-background-clip: text;

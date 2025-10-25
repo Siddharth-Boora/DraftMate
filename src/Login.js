@@ -29,7 +29,7 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container animate-enter">
       {/* Logo at top-left */}
       <div className="login-logo">
         <Link to="/">
@@ -37,7 +37,7 @@ function Login() {
         </Link>
       </div>
 
-      <form className="login-form" onSubmit={handleLogin}>
+      <form className="login-form animate-enter" onSubmit={handleLogin}>
         <h2 className="gradient-text">Sign In</h2>
 
         {error && <p className="error">{error}</p>}

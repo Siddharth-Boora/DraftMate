@@ -17,9 +17,9 @@ function App() {
         <Route
           path="/"
           element={
-            <div className="App">
+            <div className="App animate-enter">
               {/* NAVBAR */}
-              <nav className="navbar">
+              <nav className="navbar animate-enter">
                 <div className="logo">
                   <a href="/">
                     <img src={logo} alt="DraftMate Logo" />
@@ -39,7 +39,7 @@ function App() {
               </nav>
 
               {/* HERO SECTION */}
-              <section className="hero">
+              <section className="hero animate-enter">
                 <h1 className="hero-title">
                   <span className="gradient-text">Draft Smarter, Say It Better</span>
                 </h1>
