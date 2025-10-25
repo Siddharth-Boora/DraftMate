@@ -5,6 +5,10 @@ import logo from "./logo.png"; // Make sure your logo.png is in the src folder
 function App() {
   return (
     <div className="App">
+      {/* Floating splotch elements - purely decorative */}
+      <div className="splotch splotch1" aria-hidden="true" />
+      <div className="splotch splotch2" aria-hidden="true" />
+      <div className="splotch splotch3" aria-hidden="true" />
       {/* NAVBAR */}
       <nav className="navbar">
         <div className="logo">

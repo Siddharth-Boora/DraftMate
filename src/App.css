@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  position: relative;
+  z-index: 1; /* ensure page content sits above the decorative splotches */
 }
 
 .App-logo {
