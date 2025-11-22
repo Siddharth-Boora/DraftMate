@@ -222,6 +222,201 @@
     border-radius: 16px;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.homepage-container.dark .tool-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px);
+}
+
+.homepage-container.dark .tool-icon {
+    background: transparent;
+    color: #fff;
+}
+
+/* --- LIGHT MODE --- */
+.homepage-container.light {
+    background-color: #ffffff;
+    color: #000000;
+    /* Subtle radial gradients matching landing page */
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(74, 0, 255, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 70% 60%, rgba(255, 0, 122, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(0, 196, 255, 0.05) 0%, transparent 40%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.homepage-container.light .navbar {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.homepage-container.light .dropdown-menu {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.homepage-container.light .theme-btn {
+    color: #333;
+}
+
+.homepage-container.light .theme-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.homepage-container.light .profile:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.homepage-container.light .tool-card {
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    /* Subtle border */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    color: #000;
+}
+
+.homepage-container.light .tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border-color: #e0e0e0;
+}
+
+/* --- SHARED STYLES --- */
+.homepage-container .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.homepage-container .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.homepage-container .logo img {
+    height: 32px;
+    width: auto;
+}
+
+.homepage-container .logo span {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.homepage-container .profile-container {
+    position: relative;
+}
+
+.homepage-container .profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.homepage-container .pfp {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.homepage-container .name {
+    font-weight: 500;
+}
+
+.homepage-container .dropdown-arrow {
+    font-size: 0.8rem;
+    transition: transform 0.2s;
+}
+
+.homepage-container .dropdown-arrow.open {
+    transform: rotate(180deg);
+}
+
+.homepage-container .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    border-radius: 8px;
+    padding: 0.5rem;
+    min-width: 180px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.homepage-container .theme-btn,
+.homepage-container .logout-btn {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.homepage-container .logout-btn {
+    color: #ef4444;
+}
+
+.homepage-container .logout-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.homepage-container .dropdown-divider {
+    height: 1px;
+    background: rgba(128, 128, 128, 0.2);
+    margin: 4px 0;
+}
+
+/* --- MAIN CONTENT --- */
+.homepage-container .content {
+    padding: 6rem 2rem;
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.greeting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     gap: 1rem;
     position: relative;
     overflow: hidden;
@@ -242,13 +437,45 @@
     /* Subtle zoom on hover */
 }
 
-align-items: center;
-justify-content: center;
-padding: 60px 20px;
-text-align: center;
-background: rgba(0, 0, 0, 0.02);
-border-radius: 16px;
-border: 2px dashed rgba(0, 0, 0, 0.1);
+.tool-icon svg {
+    width: 40px;
+    height: 40px;
+}
+
+.tool-title {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    /* Prevent wrapping */
+}
+
+/* --- RECENT DOCS SECTION --- */
+.recent-section {
+    width: 100%;
+    max-width: 1000px;
+    /* Match tools width */
+    text-align: left;
+}
+
+.recent-section .section-title {
+    text-align: left;
+    font-size: 20px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 16px;
+    border: 2px dashed rgba(0, 0, 0, 0.1);
 }
 
 .homepage-container.dark .empty-state {

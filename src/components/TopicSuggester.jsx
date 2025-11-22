@@ -87,7 +87,7 @@ EXAMPLE 3: [Third example topic]
         <div className="topic-suggester">
             <div className="topic-suggester-content">
                 <h2 className="topic-suggester-title">What would you like to write about?</h2>
-                <p className="topic-suggester-subtitle">Enter your topic and let Good AI craft your outline</p>
+                <p className="topic-suggester-subtitle">Enter your topic and let DraftMate craft an outline</p>
 
                 <div className="topic-input-container">
                     <input
