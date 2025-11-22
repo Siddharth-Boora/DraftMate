@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import logo from "../logo.png";
+import TopicSuggester from "../components/TopicSuggester";
 import "./HomePage.css";
 
 function HomePage() {
@@ -52,7 +53,7 @@ function HomePage() {
 
     const tools = [
         {
-            title: "Construct an Essay",
+            title: "Essay Checker",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#icon-gradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
@@ -171,6 +172,9 @@ function HomePage() {
             {/* MAIN CONTENT */}
             <div className="content">
                 <h1 className="greeting">Hello, {firstName}</h1>
+
+                {/* TOPIC SUGGESTER */}
+                <TopicSuggester />
 
                 {/* TOOLS SECTION */}
                 <section className="tools-section">

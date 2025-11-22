@@ -214,39 +214,6 @@
 }
 
 .greeting {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 1rem;
-}
-
-.section-title {
-    font-size: 24px;
-    font-weight: 300;
-    /* Light font weight */
-    margin-bottom: 30px;
-    opacity: 0.8;
-}
-
-/* --- TOOLS SECTION --- */
-.tools-section {
-    width: 100%;
-    max-width: 1000px;
-    margin-bottom: 60px;
-}
-
-.tools-row {
-    display: flex;
-    gap: 20px;
-    width: 100%;
-    justify-content: center;
-    flex-wrap: nowrap;
-    /* Force single row on desktop */
-}
-
-.tool-card {
-    flex: 1;
-    min-width: 0;
-    /* Allow shrinking */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -275,45 +242,13 @@
     /* Subtle zoom on hover */
 }
 
-.tool-icon svg {
-    width: 40px;
-    height: 40px;
-}
-
-.tool-title {
-    font-size: 16px;
-    font-weight: 600;
-    text-align: center;
-    white-space: nowrap;
-    /* Prevent wrapping */
-}
-
-/* --- RECENT DOCS SECTION --- */
-.recent-section {
-    width: 100%;
-    max-width: 1000px;
-    /* Match tools width */
-    text-align: left;
-}
-
-.recent-section .section-title {
-    text-align: left;
-    font-size: 20px;
-    margin-bottom: 20px;
-    padding-left: 10px;
-}
-
-/* Empty State */
-.empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 20px;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.02);
-    border-radius: 16px;
-    border: 2px dashed rgba(0, 0, 0, 0.1);
+align-items: center;
+justify-content: center;
+padding: 60px 20px;
+text-align: center;
+background: rgba(0, 0, 0, 0.02);
+border-radius: 16px;
+border: 2px dashed rgba(0, 0, 0, 0.1);
 }
 
 .homepage-container.dark .empty-state {

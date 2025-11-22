@@ -1,0 +1,302 @@
+.topic-suggester {
+    width: 100%;
+    margin: 2rem 0;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, rgba(74, 0, 255, 0.05) 0%, rgba(255, 0, 122, 0.05) 100%);
+    border-radius: 24px;
+    border: 1px solid rgba(74, 0, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.topic-suggester::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(74, 0, 255, 0.03) 0%, rgba(255, 0, 122, 0.03) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.topic-suggester:hover::before {
+    opacity: 1;
+}
+
+.topic-suggester-content {
+    position: relative;
+    z-index: 1;
+}
+
+.topic-suggester-title {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #4a00ff 0%, #ff007a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.topic-suggester-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+.topic-input-container {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.topic-input {
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    font-size: 1.1rem;
+    border: 2px solid rgba(74, 0, 255, 0.2);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+.topic-input:focus {
+    border-color: #4a00ff;
+    box-shadow: 0 0 0 4px rgba(74, 0, 255, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.topic-input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.topic-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.topic-loading {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.loading-spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(74, 0, 255, 0.2);
+    border-top-color: #4a00ff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.suggested-title-container {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(74, 0, 255, 0.08) 0%, rgba(255, 0, 122, 0.08) 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(74, 0, 255, 0.15);
+    animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.suggested-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.suggested-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #4a00ff 0%, #ff007a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.suggested-topics-container {
+    margin-top: 2rem;
+}
+
+.suggested-topics-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.suggested-topics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.suggested-topic-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(74, 0, 255, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.suggested-topic-item:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(74, 0, 255, 0.3);
+    transform: translateX(8px);
+    box-shadow: 0 4px 12px rgba(74, 0, 255, 0.15);
+}
+
+.topic-bullet {
+    color: #4a00ff;
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.topic-text {
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.ai-status {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.ai-status.waiting {
+    background: rgba(255, 193, 7, 0.1);
+    color: #f57c00;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.status-icon {
+    font-size: 1.2rem;
+}
+
+/* Dark theme support */
+.dark .topic-suggester {
+    background: linear-gradient(135deg, rgba(74, 0, 255, 0.1) 0%, rgba(255, 0, 122, 0.1) 100%);
+    border-color: rgba(74, 0, 255, 0.2);
+}
+
+.dark .topic-suggester-subtitle {
+    color: #aaa;
+}
+
+.dark .topic-input {
+    background: rgba(30, 30, 30, 0.8);
+    border-color: rgba(74, 0, 255, 0.3);
+    color: #fff;
+}
+
+.dark .topic-input:focus {
+    background: rgba(30, 30, 30, 0.95);
+}
+
+.dark .topic-input::placeholder {
+    color: #666;
+}
+
+.dark .suggested-title-container {
+    background: linear-gradient(135deg, rgba(74, 0, 255, 0.15) 0%, rgba(255, 0, 122, 0.15) 100%);
+    border-color: rgba(74, 0, 255, 0.25);
+}
+
+.dark .suggested-label {
+    color: #aaa;
+}
+
+.dark .suggested-topics-label {
+    color: #ddd;
+}
+
+.dark .suggested-topic-item {
+    background: rgba(30, 30, 30, 0.6);
+    border-color: rgba(74, 0, 255, 0.2);
+}
+
+.dark .suggested-topic-item:hover {
+    background: rgba(30, 30, 30, 0.9);
+    border-color: rgba(74, 0, 255, 0.4);
+}
+
+.dark .topic-text {
+    color: #ddd;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .topic-suggester {
+        padding: 2rem 1.5rem;
+        margin: 1.5rem 0;
+    }
+
+    .topic-suggester-title {
+        font-size: 1.5rem;
+    }
+
+    .topic-suggester-subtitle {
+        font-size: 1rem;
+    }
+
+    .topic-input {
+        font-size: 1rem;
+        padding: 1rem 1.25rem;
+    }
+
+    .suggested-title {
+        font-size: 1.25rem;
+    }
+
+    .suggested-topic-item:hover {
+        transform: translateX(4px);
+    }
+}
