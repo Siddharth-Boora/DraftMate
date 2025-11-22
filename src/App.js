@@ -4,7 +4,7 @@ import "./index.css";
 import logo from "./logo.png";
 import SignUp from "./pages/SignUp";
 import Login from "./Login";
-import Dashboard from "./pages/Dashboard";
+import HomePage from "./pages/HomePage";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -37,7 +37,7 @@ function App() {
           path="/"
           element={
             user ? (
-              <Navigate to="/dashboard" />
+              <Navigate to="/home" />
             ) : (
               <div className="App animate-enter">
                 {/* NAVBAR */}
@@ -78,16 +78,19 @@ function App() {
         />
 
         {/* LOGIN PAGE */}
-        <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
+        <Route path="/login" element={user ? <Navigate to="/home" /> : <Login />} />
 
         {/* SIGNUP PAGE - Allow access even if technically "logged in" momentarily during creation */}
         <Route path="/signup" element={<SignUp />} />
 
-        {/* DASHBOARD PAGE */}
+        {/* HOME PAGE */}
         <Route
-          path="/dashboard"
-          element={user ? <Dashboard /> : <Navigate to="/" />}
+          path="/home"
+          element={user ? <HomePage /> : <Navigate to="/" />}
         />
+
+        {/* Redirect old dashboard route to home just in case */}
+        <Route path="/dashboard" element={<Navigate to="/home" />} />
       </Routes>
     </Router>
   );
