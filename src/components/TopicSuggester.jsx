@@ -88,8 +88,14 @@ EXAMPLE 3: [Third example topic]
     const displayTopics = topic.trim() && suggestedTopics.length > 0 ? suggestedTopics : defaultTopics;
 
     const handleSelectTopic = (topicText, type) => {
-        setSelectedTopic(topicText);
-        setSelectedType(type);
+        // Toggle selection - if clicking the same topic, deselect it
+        if (selectedTopic === topicText && selectedType === type) {
+            setSelectedTopic(null);
+            setSelectedType(null);
+        } else {
+            setSelectedTopic(topicText);
+            setSelectedType(type);
+        }
     };
 
     const handleNext = () => {
@@ -123,13 +129,12 @@ EXAMPLE 3: [Third example topic]
                     )}
                 </div>
 
-                {/* User's Custom Title Option - Downplayed style */}
+                {/* User's Custom Title Option - Smaller, no emoji */}
                 {topic.trim() && (
                     <div
                         className={`suggested-topic-item user-topic ${selectedType === 'user' ? 'selected' : ''}`}
                         onClick={() => handleSelectTopic(topic, 'user')}
                     >
-                        <span className="topic-bullet">✏️</span>
                         <div className="topic-content">
                             <span className="topic-label">Your Title:</span>
                             <span className="topic-text">{topic}</span>
@@ -148,17 +153,16 @@ EXAMPLE 3: [Third example topic]
                     </div>
                 )}
 
-                {/* Example Topics */}
+                {/* Example Topics - 3 boxes in a row */}
                 <div className="suggested-topics-container">
                     <p className="suggested-topics-label">Suggested Topics:</p>
-                    <div className="suggested-topics-list">
+                    <div className="suggested-topics-grid">
                         {displayTopics.map((topicText, index) => (
                             <div
                                 key={index}
-                                className={`suggested-topic-item ${selectedType === 'example' && selectedTopic === topicText ? 'selected' : ''}`}
+                                className={`suggested-topic-box ${selectedType === 'example' && selectedTopic === topicText ? 'selected' : ''}`}
                                 onClick={() => handleSelectTopic(topicText, 'example')}
                             >
-                                <span className="topic-bullet">•</span>
                                 <span className="topic-text">{topicText}</span>
                             </div>
                         ))}
