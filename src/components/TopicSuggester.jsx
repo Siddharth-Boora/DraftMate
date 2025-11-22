@@ -9,6 +9,7 @@ const TopicSuggester = () => {
     const [aiReady, setAiReady] = useState(false);
     const [selectedTopic, setSelectedTopic] = useState(null);
     const [selectedType, setSelectedType] = useState(null); // 'user', 'ai', or 'example'
+    const [selectedTextType, setSelectedTextType] = useState(null); // 'essay', 'article', 'email', 'product', 'story'
     const debounceRef = useRef(null);
 
     // Check if AI is ready
@@ -22,7 +23,7 @@ const TopicSuggester = () => {
         return () => clearInterval(checkReady);
     }, []);
 
-    // Generate suggestions when topic changes
+    // Generate suggestions when topic or text type changes
     useEffect(() => {
         if (!topic.trim()) {
             setSuggestedTitle("");
@@ -37,18 +38,56 @@ const TopicSuggester = () => {
         debounceRef.current = setTimeout(async () => {
             try {
                 setLoading(true);
+
+                // Build text type-specific title instructions
+                let titleInstruction = "";
+                let contextDescription = "";
+
+                if (selectedTextType) {
+                    const typeInstructions = {
+                        'essay': {
+                            title: 'Create a short, modern title (1–2 words) for an essay. The title should sound academic, structured, and intelligent.',
+                            context: 'an academic essay'
+                        },
+                        'article': {
+                            title: 'Create a short, professional title (1–2 words) for an article. The title should feel journalistic and clear.',
+                            context: 'an article or blog post'
+                        },
+                        'email': {
+                            title: 'Create a neutral, straightforward title (1–2 words) for an email. Use ONLY the information provided in the user prompt. Do not add any external context or embellishment. Simply state what the user wrote.',
+                            context: 'an email'
+                        },
+                        'product': {
+                            title: 'Create a short, marketing-style title (1–2 words) for a product description. The title should feel commercial and persuasive.',
+                            context: 'a product description'
+                        },
+                        'story': {
+                            title: 'Create a short, creative title (1–2 words) for a story. The title should feel imaginative but minimal.',
+                            context: 'a narrative or short story'
+                        }
+                    };
+
+                    titleInstruction = typeInstructions[selectedTextType].title;
+                    contextDescription = `The user wants to write ${typeInstructions[selectedTextType].context}. `;
+                }
+
                 const response = await window.puter.ai.chat(`
 You are DraftMate, an AI writing assistant.
 The user entered the topic: "${topic}"
+${contextDescription}
 
-1. Generate ONE catchy, specific suggested topic title based on their input.
-2. Generate 3 related example topic suggestions that are different but related to their input.
+${titleInstruction ? `TITLE INSTRUCTION FOR MAIN SUGGESTION: ${titleInstruction}
+
+Your main suggested topic should be the BEST, most refined, and most compelling version. This is the top recommendation.
+
+Then generate 3 alternative example topics that are good but not as polished or refined as the main suggestion.` : `1. Generate ONE catchy, specific suggested topic title (1-2 words preferred) based on their input - this should be your BEST suggestion.
+2. Generate 3 alternative example topic suggestions that are good but not as refined as the main suggestion.`}
 
 Format your response EXACTLY like this:
-SUGGESTED TOPIC: [Your suggested topic title here]
-EXAMPLE 1: [First example topic]
-EXAMPLE 2: [Second example topic]
-EXAMPLE 3: [Third example topic]
+SUGGESTED TOPIC: [Your BEST suggested topic title here - most refined and compelling]
+EXAMPLE 1: [Alternative topic - good but not as polished]
+EXAMPLE 2: [Alternative topic - good but not as polished]
+EXAMPLE 3: [Alternative topic - good but not as polished]
         `);
 
                 const content = response?.message?.content || response?.content || "";
@@ -73,10 +112,10 @@ EXAMPLE 3: [Third example topic]
             } finally {
                 setLoading(false);
             }
-        }, 800);
+        }, 300);
 
         return () => clearTimeout(debounceRef.current);
-    }, [topic]);
+    }, [topic, selectedTextType]);
 
     // Default example topics when no input
     const defaultTopics = [
@@ -101,7 +140,7 @@ EXAMPLE 3: [Third example topic]
     const handleNext = () => {
         if (selectedTopic) {
             // TODO: Navigate to the next page with the selected topic
-            console.log("Selected topic:", selectedTopic, "Type:", selectedType);
+            console.log("Selected topic:", selectedTopic, "Type:", selectedType, "Text Type:", selectedTextType);
         }
     };
 
@@ -129,20 +168,59 @@ EXAMPLE 3: [Third example topic]
                     )}
                 </div>
 
-                {/* User's Custom Title Option */}
+                {/* Text Type Selector - Radio style */}
+                <div className="text-type-selector">
+                    <label
+                        className={`text-type-option ${selectedTextType === 'essay' ? 'selected' : ''}`}
+                        onClick={() => setSelectedTextType('essay')}
+                    >
+                        <input type="checkbox" checked={selectedTextType === 'essay'} readOnly />
+                        <span>Essay</span>
+                    </label>
+                    <label
+                        className={`text-type-option ${selectedTextType === 'article' ? 'selected' : ''}`}
+                        onClick={() => setSelectedTextType('article')}
+                    >
+                        <input type="checkbox" checked={selectedTextType === 'article'} readOnly />
+                        <span>Article</span>
+                    </label>
+                    <label
+                        className={`text-type-option ${selectedTextType === 'email' ? 'selected' : ''}`}
+                        onClick={() => setSelectedTextType('email')}
+                    >
+                        <input type="checkbox" checked={selectedTextType === 'email'} readOnly />
+                        <span>Email</span>
+                    </label>
+                    <label
+                        className={`text-type-option ${selectedTextType === 'product' ? 'selected' : ''}`}
+                        onClick={() => setSelectedTextType('product')}
+                    >
+                        <input type="checkbox" checked={selectedTextType === 'product'} readOnly />
+                        <span>Product Description</span>
+                    </label>
+                    <label
+                        className={`text-type-option ${selectedTextType === 'story' ? 'selected' : ''}`}
+                        onClick={() => setSelectedTextType('story')}
+                    >
+                        <input type="checkbox" checked={selectedTextType === 'story'} readOnly />
+                        <span>Story</span>
+                    </label>
+                </div>
+
+                {/* User's Custom Topic Option */}
                 {topic.trim() && (
                     <div
                         className={`suggested-topic-item user-topic ${selectedType === 'user' ? 'selected' : ''}`}
                         onClick={() => handleSelectTopic(topic, 'user')}
                     >
                         <div className="topic-content">
-                            <span className="topic-label">Your Title:</span>
+                            <span className="topic-label">Your Topic:</span>
                             <span className="topic-text">{topic}</span>
                         </div>
                     </div>
                 )}
 
-                {/* AI Suggested Title - Shows loading animation or result */}
+                {/* AI Suggested Topic - Shows loading animation or result */}
                 {(loading || suggestedTitle) && topic.trim() && (
                     <div
                         className={`suggested-title-container ${loading ? 'loading' : ''} ${selectedType === 'ai' ? 'selected' : ''}`}
@@ -151,14 +229,14 @@ EXAMPLE 3: [Third example topic]
                     >
                         {loading ? (
                             <>
-                                <p className="suggested-label">AI Suggested Title:</p>
+                                <p className="suggested-label">AI Suggested Topic:</p>
                                 <div className="loading-gradient-box">
                                     <div className="gradient-shimmer"></div>
                                 </div>
                             </>
                         ) : (
                             <>
-                                <p className="suggested-label">AI Suggested Title:</p>
+                                <p className="suggested-label">AI Suggested Topic:</p>
                                 <h3 className="suggested-title">{suggestedTitle}</h3>
                             </>
                         )}

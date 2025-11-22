@@ -53,7 +53,7 @@
 
 .topic-input-container {
     position: relative;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .topic-input {
@@ -107,7 +107,49 @@
     }
 }
 
-/* User's Custom Title */
+/* Text Type Selector */
+.text-type-selector {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.text-type-option {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #666;
+    font-weight: 400;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.text-type-option input[type="checkbox"] {
+    display: none;
+}
+
+.text-type-option:hover {
+    color: #4a00ff;
+}
+
+.text-type-option.selected {
+    background: linear-gradient(135deg, #4a00ff 0%, #ff007a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+}
+
+/* Downplay non-selected text types */
+body:has(.text-type-option.selected) .text-type-option:not(.selected) {
+    opacity: 0.4;
+}
+
+/* User's Custom Topic */
 .suggested-topic-item {
     display: flex;
     align-items: flex-start;
@@ -170,7 +212,7 @@ body:has(.suggested-topic-box.selected) .suggested-topic-item:not(.selected) {
     font-weight: 500;
 }
 
-/* AI Suggested Title */
+/* AI Suggested Topic */
 .suggested-title-container {
     margin-bottom: 2rem;
     padding: 1.5rem;
@@ -182,7 +224,7 @@ body:has(.suggested-topic-box.selected) .suggested-topic-item:not(.selected) {
     transition: all 0.3s ease;
 }
 
-/* Grey out AI title when another option is selected */
+/* Grey out AI topic when another option is selected */
 body:has(.suggested-topic-item.selected) .suggested-title-container:not(.selected),
 body:has(.suggested-topic-box.selected) .suggested-title-container:not(.selected) {
     opacity: 0.4;
@@ -228,7 +270,7 @@ body:has(.suggested-topic-box.selected) .suggested-title-container:not(.selected
     letter-spacing: 0.5px;
 }
 
-/* Creative title reveal with wave effect */
+/* Creative topic reveal with wave effect */
 .suggested-title {
     font-size: 1.5rem;
     font-weight: 700;
@@ -342,7 +384,7 @@ body:has(.suggested-topic-box.selected) .suggested-title-container:not(.selected
     transition: opacity 0.3s ease;
 }
 
-/* Grey out entire grid when user or AI title is selected */
+/* Grey out entire grid when user or AI topic is selected */
 body:has(.suggested-topic-item.selected) .suggested-topics-grid,
 body:has(.suggested-title-container.selected) .suggested-topics-grid {
     opacity: 0.5;
@@ -390,7 +432,7 @@ body:has(.suggested-topic-box.selected) .suggested-topic-box:not(.selected) {
     font-weight: 500;
 }
 
-/* Next Button - Wider and More Transparent */
+/* Next Button */
 .next-button {
     width: auto;
     padding: 0.75rem 2.5rem;
