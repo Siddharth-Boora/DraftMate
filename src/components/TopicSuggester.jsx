@@ -72,22 +72,37 @@ const TopicSuggester = () => {
                 }
 
                 const response = await window.puter.ai.chat(`
-You are DraftMate, an AI writing assistant.
-The user entered the topic: "${topic}"
+You are DraftMate, an AI writing assistant specializing in creating compelling, well-crafted topic suggestions.
+
+USER INPUT: "${topic}"
 ${contextDescription}
 
-${titleInstruction ? `TITLE INSTRUCTION FOR MAIN SUGGESTION: ${titleInstruction}
+INSTRUCTIONS FOR MAIN SUGGESTED TOPIC:
+${titleInstruction ? titleInstruction.replace('1–2 words', 'a concise phrase (4-8 words)') : 'Create a concise, descriptive, and engaging topic title (4-8 words).'}
 
-Your main suggested topic should be the BEST, most refined, and most compelling version. This is the top recommendation.
+QUALITY REQUIREMENTS FOR MAIN SUGGESTION:
+- This should be your ABSOLUTE BEST suggestion - the most refined, polished, and compelling version
+- Make it a SINGLE PHRASE - NO colons, NO subtitles, just one flowing phrase
+- Keep it concise (4-8 words) but still descriptive and engaging
+- Make it memorable, clear, and engaging
+- Ensure it captures the essence of the user's input perfectly
+- This is your top recommendation that you would be most proud of
+- Examples of good topics: "Social Media's Impact on Modern Communication", "Artificial Intelligence Transforming Healthcare Today", "Climate Change and Global Action"
 
-Then generate 3 alternative example topics that are good but not as polished or refined as the main suggestion.` : `1. Generate ONE catchy, specific suggested topic title (1-2 words preferred) based on their input - this should be your BEST suggestion.
-2. Generate 3 alternative example topic suggestions that are good but not as refined as the main suggestion.`}
+INSTRUCTIONS FOR ALTERNATIVE EXAMPLES:
+Generate 3 alternative topic suggestions that are:
+- SINGLE PHRASES like the main suggestion (NO colons, NO subtitles)
+- Concise (4-8 words) but descriptive
+- Related to the main topic but explore different angles or perspectives
+- Good quality but intentionally less polished than the main suggestion
+- Diverse in their approach (don't make them too similar to each other)
+- Still relevant and useful, just not as refined as the main suggestion
 
-Format your response EXACTLY like this:
-SUGGESTED TOPIC: [Your BEST suggested topic title here - most refined and compelling]
-EXAMPLE 1: [Alternative topic - good but not as polished]
-EXAMPLE 2: [Alternative topic - good but not as polished]
-EXAMPLE 3: [Alternative topic - good but not as polished]
+OUTPUT FORMAT (follow this EXACTLY):
+SUGGESTED TOPIC: [Your BEST, most refined single-phrase topic (4-8 words, NO colons)]
+EXAMPLE 1: [Alternative single-phrase topic (NO colons)]
+EXAMPLE 2: [Alternative single-phrase topic (NO colons)]
+EXAMPLE 3: [Alternative single-phrase topic (NO colons)]
         `);
 
                 const content = response?.message?.content || response?.content || "";
@@ -112,7 +127,7 @@ EXAMPLE 3: [Alternative topic - good but not as polished]
             } finally {
                 setLoading(false);
             }
-        }, 300);
+        }, 800);
 
         return () => clearTimeout(debounceRef.current);
     }, [topic, selectedTextType]);
