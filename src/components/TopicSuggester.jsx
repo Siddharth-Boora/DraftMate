@@ -7,6 +7,8 @@ const TopicSuggester = () => {
     const [suggestedTopics, setSuggestedTopics] = useState([]);
     const [loading, setLoading] = useState(false);
     const [aiReady, setAiReady] = useState(false);
+    const [selectedTopic, setSelectedTopic] = useState(null);
+    const [selectedType, setSelectedType] = useState(null); // 'user', 'ai', or 'example'
     const debounceRef = useRef(null);
 
     // Check if AI is ready
@@ -25,6 +27,8 @@ const TopicSuggester = () => {
         if (!topic.trim()) {
             setSuggestedTitle("");
             setSuggestedTopics([]);
+            setSelectedTopic(null);
+            setSelectedType(null);
             return;
         }
 
@@ -83,6 +87,20 @@ EXAMPLE 3: [Third example topic]
 
     const displayTopics = topic.trim() && suggestedTopics.length > 0 ? suggestedTopics : defaultTopics;
 
+    const handleSelectTopic = (topicText, type) => {
+        setSelectedTopic(topicText);
+        setSelectedType(type);
+    };
+
+    const handleNext = () => {
+        if (selectedTopic) {
+            // TODO: Navigate to the next page with the selected topic
+            console.log("Selected topic:", selectedTopic, "Type:", selectedType);
+        }
+    };
+
+    const isNextEnabled = selectedTopic && !loading;
+
     return (
         <div className="topic-suggester">
             <div className="topic-suggester-content">
@@ -105,24 +123,66 @@ EXAMPLE 3: [Third example topic]
                     )}
                 </div>
 
-                {suggestedTitle && (
-                    <div className="suggested-title-container">
-                        <p className="suggested-label">Suggested Topic:</p>
-                        <h3 className="suggested-title">{suggestedTitle}</h3>
+                {/* User's Custom Title Option */}
+                {topic.trim() && (
+                    <div
+                        className={`topic-option user-topic ${selectedType === 'user' ? 'selected' : ''}`}
+                        onClick={() => handleSelectTopic(topic, 'user')}
+                    >
+                        <div className="option-header">
+                            <span className="option-label">Your Title:</span>
+                            <div className={`selection-indicator ${selectedType === 'user' ? 'active' : ''}`}>
+                                {selectedType === 'user' && <span className="checkmark">✓</span>}
+                            </div>
+                        </div>
+                        <p className="option-text">{topic}</p>
                     </div>
                 )}
 
+                {/* AI Suggested Title Option */}
+                {suggestedTitle && (
+                    <div
+                        className={`topic-option ai-topic ${selectedType === 'ai' ? 'selected' : ''}`}
+                        onClick={() => handleSelectTopic(suggestedTitle, 'ai')}
+                    >
+                        <div className="option-header">
+                            <span className="option-label">AI Suggested Title:</span>
+                            <div className={`selection-indicator ${selectedType === 'ai' ? 'active' : ''}`}>
+                                {selectedType === 'ai' && <span className="checkmark">✓</span>}
+                            </div>
+                        </div>
+                        <p className="option-text">{suggestedTitle}</p>
+                    </div>
+                )}
+
+                {/* Example Topics */}
                 <div className="suggested-topics-container">
-                    <p className="suggested-topics-label">Suggested Topics:</p>
+                    <p className="suggested-topics-label">Or choose from these suggestions:</p>
                     <div className="suggested-topics-list">
                         {displayTopics.map((topicText, index) => (
-                            <div key={index} className="suggested-topic-item">
+                            <div
+                                key={index}
+                                className={`suggested-topic-item ${selectedType === 'example' && selectedTopic === topicText ? 'selected' : ''}`}
+                                onClick={() => handleSelectTopic(topicText, 'example')}
+                            >
                                 <span className="topic-bullet">•</span>
                                 <span className="topic-text">{topicText}</span>
+                                {selectedType === 'example' && selectedTopic === topicText && (
+                                    <span className="checkmark-inline">✓</span>
+                                )}
                             </div>
                         ))}
                     </div>
                 </div>
+
+                {/* Next Button */}
+                <button
+                    className={`next-button ${isNextEnabled ? 'enabled' : 'disabled'}`}
+                    onClick={handleNext}
+                    disabled={!isNextEnabled}
+                >
+                    Next
+                </button>
 
                 {!aiReady && (
                     <div className="ai-status waiting">
@@ -136,3 +196,4 @@ EXAMPLE 3: [Third example topic]
 };
 
 export default TopicSuggester;
+

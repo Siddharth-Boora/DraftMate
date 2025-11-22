@@ -171,8 +171,6 @@ function HomePage() {
 
             {/* MAIN CONTENT */}
             <div className="content">
-                <h1 className="greeting">Hello, {firstName}</h1>
-
                 {/* TOPIC SUGGESTER */}
                 <TopicSuggester />
 
