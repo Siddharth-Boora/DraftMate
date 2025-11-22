@@ -1,18 +1,79 @@
+/* Base Container */
 .dashboard-container {
   min-height: 100vh;
-  background-color: #0a0a0a;
-  color: white;
   font-family: "Inter", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* --- DARK MODE (Default/Polished) --- */
+.dashboard-container.dark {
+  background-color: #0a0a0a;
+  color: white;
+}
+
+.dashboard-container.dark .navbar {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-container.dark .dropdown-menu {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-container.dark .theme-btn {
+  color: #e0e0e0;
+}
+
+.dashboard-container.dark .theme-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* --- LIGHT MODE (Landing Page Style) --- */
+.dashboard-container.light {
+  background-color: #ffffff;
+  color: #000000;
+  /* Subtle radial gradients matching landing page */
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(74, 0, 255, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(255, 0, 122, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(0, 196, 255, 0.05) 0%, transparent 40%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.dashboard-container.light .navbar {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-container.light .dropdown-menu {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-container.light .theme-btn {
+  color: #333;
+}
+
+.dashboard-container.light .theme-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-container.light .profile:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* --- SHARED STYLES --- */
 .dashboard-container .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .dashboard-container .logo {
@@ -25,7 +86,6 @@
 .dashboard-container .logo img {
   height: 32px;
   width: auto;
-  /* Ensure width adjusts automatically */
 }
 
 .dashboard-container .logo span {
@@ -47,10 +107,6 @@
   transition: background 0.2s;
 }
 
-.dashboard-container .profile:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
 .dashboard-container .pfp {
   width: 36px;
   height: 36px;
@@ -61,6 +117,8 @@
   justify-content: center;
   font-weight: 600;
   font-size: 1.1rem;
+  color: white;
+  /* Always white text in PFP */
 }
 
 .dashboard-container .name {
@@ -81,33 +139,47 @@
   top: 100%;
   right: 0;
   margin-top: 0.5rem;
-  background: #1a1a1a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 0.5rem;
-  min-width: 150px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  min-width: 180px;
   z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dashboard-container .theme-btn,
+.dashboard-container .logout-btn {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .dashboard-container .logout-btn {
-  width: 100%;
-  padding: 0.5rem 1rem;
-  background: transparent;
-  border: none;
   color: #ef4444;
-  text-align: left;
-  cursor: pointer;
-  border-radius: 4px;
-  font-weight: 500;
-  transition: background 0.2s;
 }
 
 .dashboard-container .logout-btn:hover {
   background: rgba(239, 68, 68, 0.1);
 }
 
+.dashboard-container .dropdown-divider {
+  height: 1px;
+  background: rgba(128, 128, 128, 0.2);
+  margin: 4px 0;
+}
+
 .dashboard-container .content {
-  padding: 4rem 2rem;
+  padding: 6rem 2rem;
   text-align: center;
 }
