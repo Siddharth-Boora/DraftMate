@@ -123,41 +123,34 @@ EXAMPLE 3: [Third example topic]
                     )}
                 </div>
 
-                {/* User's Custom Title Option */}
+                {/* User's Custom Title Option - Downplayed style */}
                 {topic.trim() && (
                     <div
-                        className={`topic-option user-topic ${selectedType === 'user' ? 'selected' : ''}`}
+                        className={`suggested-topic-item user-topic ${selectedType === 'user' ? 'selected' : ''}`}
                         onClick={() => handleSelectTopic(topic, 'user')}
                     >
-                        <div className="option-header">
-                            <span className="option-label">Your Title:</span>
-                            <div className={`selection-indicator ${selectedType === 'user' ? 'active' : ''}`}>
-                                {selectedType === 'user' && <span className="checkmark">✓</span>}
-                            </div>
+                        <span className="topic-bullet">✏️</span>
+                        <div className="topic-content">
+                            <span className="topic-label">Your Title:</span>
+                            <span className="topic-text">{topic}</span>
                         </div>
-                        <p className="option-text">{topic}</p>
                     </div>
                 )}
 
-                {/* AI Suggested Title Option */}
+                {/* AI Suggested Title Option - Premium gradient style */}
                 {suggestedTitle && (
                     <div
-                        className={`topic-option ai-topic ${selectedType === 'ai' ? 'selected' : ''}`}
+                        className={`suggested-title-container ${selectedType === 'ai' ? 'selected' : ''}`}
                         onClick={() => handleSelectTopic(suggestedTitle, 'ai')}
                     >
-                        <div className="option-header">
-                            <span className="option-label">AI Suggested Title:</span>
-                            <div className={`selection-indicator ${selectedType === 'ai' ? 'active' : ''}`}>
-                                {selectedType === 'ai' && <span className="checkmark">✓</span>}
-                            </div>
-                        </div>
-                        <p className="option-text">{suggestedTitle}</p>
+                        <p className="suggested-label">AI Suggested Title:</p>
+                        <h3 className="suggested-title">{suggestedTitle}</h3>
                     </div>
                 )}
 
                 {/* Example Topics */}
                 <div className="suggested-topics-container">
-                    <p className="suggested-topics-label">Or choose from these suggestions:</p>
+                    <p className="suggested-topics-label">Suggested Topics:</p>
                     <div className="suggested-topics-list">
                         {displayTopics.map((topicText, index) => (
                             <div
@@ -167,21 +160,19 @@ EXAMPLE 3: [Third example topic]
                             >
                                 <span className="topic-bullet">•</span>
                                 <span className="topic-text">{topicText}</span>
-                                {selectedType === 'example' && selectedTopic === topicText && (
-                                    <span className="checkmark-inline">✓</span>
-                                )}
                             </div>
                         ))}
                     </div>
                 </div>
 
-                {/* Next Button */}
+                {/* Next Button with Arrow */}
                 <button
                     className={`next-button ${isNextEnabled ? 'enabled' : 'disabled'}`}
                     onClick={handleNext}
                     disabled={!isNextEnabled}
                 >
                     Next
+                    <span className="arrow-icon">→</span>
                 </button>
 
                 {!aiReady && (
@@ -196,4 +187,3 @@ EXAMPLE 3: [Third example topic]
 };
 
 export default TopicSuggester;
-
