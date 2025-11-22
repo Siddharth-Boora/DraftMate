@@ -21,8 +21,7 @@ function Login() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      alert("Logged in successfully!");
-      // You can redirect here if needed
+      // Navigation is handled by App.js state change
     } catch (err) {
       setError("Invalid email or password.");
     }

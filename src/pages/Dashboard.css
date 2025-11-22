@@ -1,0 +1,113 @@
+.dashboard-container {
+  min-height: 100vh;
+  background-color: #0a0a0a;
+  color: white;
+  font-family: "Inter", sans-serif;
+}
+
+.dashboard-container .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-container .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.dashboard-container .logo img {
+  height: 32px;
+  width: auto;
+  /* Ensure width adjusts automatically */
+}
+
+.dashboard-container .logo span {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.dashboard-container .profile-container {
+  position: relative;
+}
+
+.dashboard-container .profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.dashboard-container .profile:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-container .pfp {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.dashboard-container .name {
+  font-weight: 500;
+}
+
+.dashboard-container .dropdown-arrow {
+  font-size: 0.8rem;
+  transition: transform 0.2s;
+}
+
+.dashboard-container .dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+.dashboard-container .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem;
+  min-width: 150px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.dashboard-container .logout-btn {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.dashboard-container .logout-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.dashboard-container .content {
+  padding: 4rem 2rem;
+  text-align: center;
+}
