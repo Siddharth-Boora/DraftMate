@@ -37,7 +37,7 @@ function Dashboard() {
   };
 
   return (
-    <div className={`dashboard-container ${theme}`}>
+    <div className={`dashboard-container ${theme} animate-enter`}>
       {/* NAVBAR */}
       <nav className="navbar">
         <div className="logo" onClick={() => navigate("/dashboard")}>

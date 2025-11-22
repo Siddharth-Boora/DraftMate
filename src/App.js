@@ -80,8 +80,8 @@ function App() {
         {/* LOGIN PAGE */}
         <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
 
-        {/* SIGNUP PAGE */}
-        <Route path="/signup" element={user ? <Navigate to="/dashboard" /> : <SignUp />} />
+        {/* SIGNUP PAGE - Allow access even if technically "logged in" momentarily during creation */}
+        <Route path="/signup" element={<SignUp />} />
 
         {/* DASHBOARD PAGE */}
         <Route
