@@ -129,7 +129,7 @@ EXAMPLE 3: [Third example topic]
                     )}
                 </div>
 
-                {/* User's Custom Title Option - Smaller, no emoji */}
+                {/* User's Custom Title Option */}
                 {topic.trim() && (
                     <div
                         className={`suggested-topic-item user-topic ${selectedType === 'user' ? 'selected' : ''}`}
@@ -142,18 +142,30 @@ EXAMPLE 3: [Third example topic]
                     </div>
                 )}
 
-                {/* AI Suggested Title Option - Premium gradient style */}
-                {suggestedTitle && (
+                {/* AI Suggested Title - Shows loading animation or result */}
+                {(loading || suggestedTitle) && topic.trim() && (
                     <div
-                        className={`suggested-title-container ${selectedType === 'ai' ? 'selected' : ''}`}
-                        onClick={() => handleSelectTopic(suggestedTitle, 'ai')}
+                        className={`suggested-title-container ${loading ? 'loading' : ''} ${selectedType === 'ai' ? 'selected' : ''}`}
+                        onClick={() => !loading && handleSelectTopic(suggestedTitle, 'ai')}
+                        style={{ cursor: loading ? 'default' : 'pointer' }}
                     >
-                        <p className="suggested-label">AI Suggested Title:</p>
-                        <h3 className="suggested-title">{suggestedTitle}</h3>
+                        {loading ? (
+                            <>
+                                <p className="suggested-label">AI Suggested Title:</p>
+                                <div className="loading-gradient-box">
+                                    <div className="gradient-shimmer"></div>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <p className="suggested-label">AI Suggested Title:</p>
+                                <h3 className="suggested-title">{suggestedTitle}</h3>
+                            </>
+                        )}
                     </div>
                 )}
 
-                {/* Example Topics - 3 boxes in a row */}
+                {/* Example Topics */}
                 <div className="suggested-topics-container">
                     <p className="suggested-topics-label">Suggested Topics:</p>
                     <div className="suggested-topics-grid">
@@ -169,7 +181,7 @@ EXAMPLE 3: [Third example topic]
                     </div>
                 </div>
 
-                {/* Next Button with Arrow */}
+                {/* Next Button */}
                 <button
                     className={`next-button ${isNextEnabled ? 'enabled' : 'disabled'}`}
                     onClick={handleNext}
